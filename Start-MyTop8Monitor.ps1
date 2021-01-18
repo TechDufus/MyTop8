@@ -25,9 +25,24 @@ Process {
     $EndPattern = '<!-- BLOG-POST-LIST:END -->'
     $EndIndex = (($ProfileContent | Select-String -Pattern $EndPattern).LineNumber - 1)
 
-    # $SectionToReplace = $ProfileContent[$StartIndex..$EndIndex] | Out-String
-    $ReplaceWith = '# Hello There!'
-    ($StartIndex+1)..($EndIndex-1) | Foreach-Object {
-        $ProfileContent[$_].Replace($ProfileContent[$_], $ReplaceWith)
+    $PreSectionContent = $ProfileContent[0..($StartIndex - 1)]
+    $CurrentSection = $ProfileContent[$StartIndex..$EndIndex]
+    
+    $EndOfFileIndex = ($ProfileContent.Count - 1)
+    If (($EndIndex) -ge $EndOfFileIndex) {
+        $PostSectionContent = [System.String]::Empty
+    } Else {
+        $PostSectionContent = $ProfileContent[($EndIndex + 1)..$EndOfFileIndex]
+    }
+
+    $AssembledProfile = $PreSectionContent,$CurrentSection,$PostSectionContent | Out-String
+    $ProfileContentString = $ProfileContent | Out-String
+
+    If ($AssembledProfile -eq $ProfileContentString) {
+        "They are the same, no changes need to be made"
+    } Else {
+        "Need to publish new profile for New Top8 Content."
+        "git commit -m 'New MyTop8 Content'"
+        "git push"
     }
 }

@@ -54,7 +54,7 @@ Begin {
             $null=$OutputMyTop8.AppendLine('<table style="border-collapse: collapse;" border="1"><tbody>')
             $null=$OutputMyTop8.AppendLine("<tr><td style='text-align: center' colspan='4'><h1>$GitHubUsername's GitHub Top 8</h1></td></tr>")
             for ($i = 0; $i -lt $UsersList.Count; $i++) {
-                $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($UsersList[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($UsersList[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;''>$($i + 1). <a href='https://github.com/$($UsersList[$i])'>$($UsersList[$i])</a></p></td>")
+                $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($UsersList[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($UsersList[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($UsersList[$i])'>$($UsersList[$i])</a></p></td>")
                 If ($i -eq 3) {
                     $null=$OutputMyTop8.Append('</tr><tr>')
                 }

@@ -1,0 +1,35 @@
+name: 'MyTop8 Workflow'
+author: 'Matthew J. DeGarmo'
+description: 'Create a ''MySpace Top 8'' section in your ReadMe.md file for GitHub users.'
+
+inputs:
+  gh_token:
+    description: 'GitHub access token with Repo scope'
+    required: false
+    default: ${{ github.token }}
+  users_list:
+    description: 'Comma seperated list of your magical Top 8 GitHub users.'
+    default: ''
+    required: true
+  readme_path:
+    description: 'Path of the readme file you want to update'
+    default: './README.md'
+    required: false
+  commit_message:
+    description: "Commit message used while committing to the repo"
+    default: "Updated MyTop8 section with current list of users."
+    required: false
+  committer_username:
+    description: "Username used while committing to the repo"
+    default: "MyTop8-post-bot"
+    required: false
+  committer_email:
+    description: "Email id used while committing to the repo"
+    default: "MyTop8-post-bot@matthewjdegarmo.com"
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/Start-MyTop8Monitor.ps1
+      shell: pwsh

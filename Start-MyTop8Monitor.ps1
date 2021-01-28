@@ -1,26 +1,26 @@
 [CmdletBinding()]
 Param(
-    # Specifies a path to one or more locations.
-    [Parameter(Mandatory=$true,
-               Position=0,
-               ParameterSetName="Path",
-               ValueFromPipeline=$true,
-               ValueFromPipelineByPropertyName=$true,
-               HelpMessage="Path to one or more locations.")]
-    [ValidateNotNullOrEmpty()]
-    [System.String]
-    $Path,
+    # # Specifies a path to one or more locations.
+    # [Parameter(Mandatory=$true,
+    #            Position=0,
+    #            ParameterSetName="Path",
+    #            ValueFromPipeline=$true,
+    #            ValueFromPipelineByPropertyName=$true,
+    #            HelpMessage="Path to one or more locations.")]
+    # [ValidateNotNullOrEmpty()]
+    # [System.String]
+    # $Path,
 
-    # Specifies a path to one or more locations.
-    [Parameter(Mandatory=$true,
-               Position=0,
-               ParameterSetName="Path",
-               ValueFromPipeline=$true,
-               ValueFromPipelineByPropertyName=$true,
-               HelpMessage="Path to one or more locations.")]
-    [ValidateNotNullOrEmpty()]
-    [System.String]
-    $UsersPath
+    # # Specifies a path to one or more locations.
+    # [Parameter(Mandatory=$true,
+    #            Position=0,
+    #            ParameterSetName="Path",
+    #            ValueFromPipeline=$true,
+    #            ValueFromPipelineByPropertyName=$true,
+    #            HelpMessage="Path to one or more locations.")]
+    # [ValidateNotNullOrEmpty()]
+    # [System.String]
+    # $UsersPath
 )
 
 Begin {
@@ -38,23 +38,20 @@ Begin {
                         ValueFromPipelineByPropertyName=$true,
                         HelpMessage="Path to one or more locations.")]
             [ValidateNotNullOrEmpty()]
-            [System.String]
-            $UsersPath,
-
-            [System.String] $GitHubUsername
+            [System.String[]]
+            $Users
         )
 
         Process {
-            $UsersList = Get-Content $UsersPath
-            If ($UsersList.Count -gt 8) {
+            $Users = $Users.Split()
+            If ($Users.Count -gt 8) {
                 Throw "YOU NEED NO MORE THAN 8 USERS PLEASE!"
             }
             $OutputMyTop8 = [System.Text.StringBuilder]::new()
             $null=$OutputMyTop8.AppendLine('<!-- MYTOP8-LIST:START -->')
             $null=$OutputMyTop8.AppendLine('<table style="border-collapse: collapse;" border="1"><tbody>')
-            $null=$OutputMyTop8.AppendLine("<tr><td style='text-align: center' colspan='4'><h1>$GitHubUsername's GitHub Top 8</h1></td></tr>")
-            for ($i = 0; $i -lt $UsersList.Count; $i++) {
-                $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($UsersList[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($UsersList[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($UsersList[$i])'>$($UsersList[$i])</a></p></td>")
+            for ($i = 0; $i -lt $Users.Count; $i++) {
+                $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
                 If ($i -eq 3) {
                     $null=$OutputMyTop8.Append('</tr><tr>')
                 }
@@ -65,10 +62,37 @@ Begin {
         }
     }
     #EndRegion Get-CurrentTop8Section
+
+    #Region Commit-GitRepo
+    
+    Function Commit-GitRepo() {
+        [CmdletBinding()]
+        Param()
+
+        Process {
+            git config --local user.name "$env:INPUT_COMMITTER_USERNAME"
+            git config --local user.email "$env:INPUT_COMMITTER_EMAIL"
+
+            git add .
+            git commit -m "$env:INPUT_COMMIT_MESSAGE"
+            git push
+        }
+    }
+    #EndRegion Commit-GitRepo
 }
 
 Process {
-    $ProfileContent = Get-Content $Path
+    $env:INPUT_USERS_LIST = @('matthewjdegarmo',
+                              'EdwardHanlon',
+                              'packersking',
+                              'sannae',
+                              'TylerLeonhardt',
+                              'matthewjdegarmo',
+                              'matthewjdegarmo',
+                              'matthewjdegarmo')
+    $env:INPUT_README_PATH = ".\matthewjdegarmo\README.md"
+
+    $ProfileContent = Get-Content $env:INPUT_README_PATH
 
     #Using BLOG start as a test
     $StartPattern = '<!-- MYTOP8-LIST:START -->'
@@ -88,14 +112,17 @@ Process {
     }
 
     $getCurrentTop8SectionSplat = @{
-        UsersPath = $UsersPath
-        GitHubUsername = 'matthewjdegarmo'
+        Users = $env:INPUT_USERS_LIST
     }
 
-    $AssembledProfile = $PreSectionContent,(Get-CurrentTop8Section @getCurrentTop8SectionSplat),$PostSectionContent | Out-String
-    $ProfileContentString = $ProfileContent | Out-String
+    $GeneratedTop8Section = Get-CurrentTop8Section @getCurrentTop8SectionSplat
 
-    $AssembledProfile
+    Compare-Object -ReferenceObject $CurrentSection -DifferenceObject $GeneratedTop8Section -PassThru
+    # $AssembledProfile = $PreSectionContent,,$PostSectionContent | Out-String
+    # $ProfileContentString = $ProfileContent | Out-String
+
+
+
     # If ($AssembledProfile -eq $ProfileContentString) {
     #     "They are the same, no changes need to be made"
     # } Else {

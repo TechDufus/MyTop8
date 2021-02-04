@@ -80,7 +80,11 @@ Function Commit-GitRepo() {
     }
 }
 #EndRegion Commit-GitRepo
-
+$UsersList
+$ReadMePath
+$CommitMessage
+$CommitterUsername
+$CommitterEmail
 $ProfileContent = Get-Content -Path $ReadMePath
 
 #Using BLOG start as a test

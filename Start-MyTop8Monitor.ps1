@@ -1,14 +1,14 @@
 [CmdletBinding()]
 Param(
-    # Specifies a path to one or more locations.
-    [Parameter(Position=0,
-               ParameterSetName="Path",
-               ValueFromPipeline=$true,
-               ValueFromPipelineByPropertyName=$true,
-               HelpMessage="Path to one or more locations.")]
-    [ValidateNotNullOrEmpty()]
-    [System.String]
-    $Path = $env:INPUT_README_PATH
+    # # Specifies a path to one or more locations.
+    # [Parameter(Position=0,
+    #            ParameterSetName="Path",
+    #            ValueFromPipeline=$true,
+    #            ValueFromPipelineByPropertyName=$true,
+    #            HelpMessage="Path to one or more locations.")]
+    # [ValidateNotNullOrEmpty()]
+    # [System.String]
+    # $Path = $env:INPUT_README_PATH
 
     # # Specifies a path to one or more locations.
     # [Parameter(Mandatory=$true,
@@ -82,7 +82,7 @@ Begin {
 
 Process {
 
-    $ProfileContent = Get-Content -Path $Path
+    $ProfileContent = Get-Content -Path ${INPUT_README_PATH}
 
     #Using BLOG start as a test
     $StartPattern = '<!-- MYTOP8-LIST:START -->'

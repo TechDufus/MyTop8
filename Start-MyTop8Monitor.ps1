@@ -24,6 +24,19 @@ Param(
 
 Begin {
 
+    ## You interface with the Actions/Workflow system by interacting
+    ## with the environment.  The `GitHubActions` module makes this
+    ## easier and more natural by wrapping up access to the Workflow
+    ## environment in PowerShell-friendly constructions and idioms
+    if (-not (Get-Module -ListAvailable GitHubActions)) {
+        ## Make sure the GH Actions module is installed from the Gallery
+        Install-Module GitHubActions -Force
+    }
+
+    ## Load up some common functionality for interacting
+    ## with the GitHub Actions/Workflow environment
+    Import-Module GitHubActions
+
     #Region Get-CurrentTop8Section
     
     Function Get-CurrentTop8Section() {
@@ -82,7 +95,7 @@ Begin {
 
 Process {
 
-    Write-Host "Readme value: $(Get-ChildItem "Env:INPUT_README_PATH")"
+    Write-Host "Readme value: $(Get-ActionInput readme_path)"
     $ProfileContent = Get-Content -Path (Get-ChildItem "Env:INPUT_README_PATH")
 
     #Using BLOG start as a test

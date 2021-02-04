@@ -76,7 +76,7 @@ Function Commit-GitRepo() {
     }
 }
 #EndRegion Commit-GitRepo
-
+Get-ChildItem Env:
 Write-Host "Readme value: $($inputs.readme_path)"
 Write-Host "users value: $($inputs.users_list)"
 $ProfileContent = Get-Content -Path $inputs.readme_path

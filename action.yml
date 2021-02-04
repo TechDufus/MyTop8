@@ -3,10 +3,6 @@ author: 'Matthew J. DeGarmo'
 description: 'Create a ''MySpace Top 8'' section in your ReadMe.md file for GitHub users.'
 
 inputs:
-  gh_token:
-    description: 'GitHub access token with Repo scope'
-    required: false
-    default: ${{ github.token }}
   users_list:
     description: 'Comma seperated list of your magical Top 8 GitHub users.'
     default: ''
@@ -29,14 +25,14 @@ inputs:
     required: false
 
 
-## Even though the Action logic may be implemented
-## in PWSH, we still need a NodeJS entry point
-runs:
-  using: node12
-  main: _init/index.js
-
+# ## Even though the Action logic may be implemented
+# ## in PWSH, we still need a NodeJS entry point
 # runs:
-#   using: composite
-#   steps:
-#     - run: ${{ github.action_path }}/Start-MyTop8Monitor.ps1
-#       shell: pwsh
+#   using: node12
+#   main: _init/index.js
+
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/action.ps1
+      shell: pwsh

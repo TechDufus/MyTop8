@@ -1,5 +1,5 @@
 Param(
-    $InputObject
+    [System.Object] $InputObject
 )
 
 # ## You interface with the Actions/Workflow system by interacting

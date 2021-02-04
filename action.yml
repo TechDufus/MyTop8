@@ -28,8 +28,15 @@ inputs:
     default: "MyTop8-post-bot@matthewjdegarmo.com"
     required: false
 
+
+## Even though the Action logic may be implemented
+## in PWSH, we still need a NodeJS entry point
 runs:
-  using: composite
-  steps:
-    - run: ${{ github.action_path }}/Start-MyTop8Monitor.ps1
-      shell: pwsh
+  using: node12
+  main: _init/index.js
+
+# runs:
+#   using: composite
+#   steps:
+#     - run: ${{ github.action_path }}/Start-MyTop8Monitor.ps1
+#       shell: pwsh

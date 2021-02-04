@@ -79,6 +79,9 @@ Function Commit-GitRepo() {
 }
 #EndRegion Commit-GitRepo
 
+Get-ChildItem Env:
+Get-Variable
+
 $InputObject | Get-Member
 $ProfileContent = Get-Content -Path $inputs.readme_path
 

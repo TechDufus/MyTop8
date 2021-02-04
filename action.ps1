@@ -1,5 +1,5 @@
 Param(
-    $path
+    $InputObject
 )
 
 # ## You interface with the Actions/Workflow system by interacting
@@ -78,10 +78,8 @@ Function Commit-GitRepo() {
     }
 }
 #EndRegion Commit-GitRepo
-Get-ChildItem Env:
-Get-Variable
-Write-Host "Readme value: $($inputs.readme_path)"
-Write-Host "users value: $($inputs.users_list)"
+
+$InputObject
 $ProfileContent = Get-Content -Path $inputs.readme_path
 
 #Using BLOG start as a test

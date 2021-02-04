@@ -82,7 +82,8 @@ Begin {
 
 Process {
 
-    $ProfileContent = Get-Content -Path ${INPUT_README_PATH}
+    Write-Host "Readme value: $(Get-ChildItem "Env:INPUT_README_PATH")"
+    $ProfileContent = Get-Content -Path (Get-ChildItem "Env:INPUT_README_PATH")
 
     #Using BLOG start as a test
     $StartPattern = '<!-- MYTOP8-LIST:START -->'

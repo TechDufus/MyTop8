@@ -82,15 +82,6 @@ Begin {
 }
 
 Process {
-    $env:INPUT_USERS_LIST = @('matthewjdegarmo',
-                              'EdwardHanlon',
-                              'packersking',
-                              'sannae',
-                              'TylerLeonhardt',
-                              'matthewjdegarmo',
-                              'matthewjdegarmo',
-                              'matthewjdegarmo')
-    $env:INPUT_README_PATH = ".\matthewjdegarmo\README.md"
 
     $ProfileContent = Get-Content $env:INPUT_README_PATH
 

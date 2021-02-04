@@ -1,8 +1,7 @@
 [CmdletBinding()]
 Param(
     # Specifies a path to one or more locations.
-    [Parameter(Mandatory=$true,
-               Position=0,
+    [Parameter(Position=0,
                ParameterSetName="Path",
                ValueFromPipeline=$true,
                ValueFromPipelineByPropertyName=$true,

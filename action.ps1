@@ -12,7 +12,9 @@ Param(
     [System.Object[]] $CommitterUsername,
 
     [Parameter(Mandatory)]
-    [System.Object[]] $CommitterEmail
+    [System.Object[]] $CommitterEmail,
+
+    $Extra
 )
 
 #Region Get-CurrentTop8Section

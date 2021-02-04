@@ -79,7 +79,7 @@ Function Commit-GitRepo() {
 }
 #EndRegion Commit-GitRepo
 
-$InputObject
+$InputObject | Get-Member
 $ProfileContent = Get-Content -Path $inputs.readme_path
 
 #Using BLOG start as a test

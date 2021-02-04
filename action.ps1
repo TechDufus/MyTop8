@@ -82,7 +82,8 @@ Function Commit-GitRepo() {
 Get-ChildItem Env:
 Get-Variable
 
-$InputObject
+$InputObject.readme_path
+$InputObject.users_list
 $ProfileContent = Get-Content -Path $inputs.readme_path
 
 #Using BLOG start as a test

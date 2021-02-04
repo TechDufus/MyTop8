@@ -34,5 +34,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: ${{ github.action_path }}/action.ps1 -InputObject ${{ inputs }}
+    - run: >
+        ${{ github.action_path }}/action.ps1
+        -ReadMePath        ${{ inputs.readme_path }}
+        -UsersList         ${{ inputs.users_list }}
+        -CommitMessage     ${{ inputs.commit_message }}
+        -CommitterUsername ${{ inputs.committer_username }}
+        -CommitterEmail    ${{ inputs.committer_email }}
       shell: pwsh

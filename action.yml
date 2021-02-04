@@ -34,5 +34,5 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: ${{ github.action_path }}/action.ps1
+    - run: ${{ github.action_path }}/action.ps1 -path ${{ inputs.readme_path }}
       shell: pwsh

@@ -1,26 +1,28 @@
+Param(
+    $path
+)
+
+# ## You interface with the Actions/Workflow system by interacting
+# ## with the environment.  The `GitHubActions` module makes this
+# ## easier and more natural by wrapping up access to the Workflow
+# ## environment in PowerShell-friendly constructions and idioms
+# if (-not (Get-Module -ListAvailable GitHubActions)) {
+#     ## Make sure the GH Actions module is installed from the Gallery
+#     Install-Module GitHubActions -Force
+# }
+
+# ## Load up some common functionality for interacting
+# ## with the GitHub Actions/Workflow environment
+# Import-Module GitHubActions
 
 
-## You interface with the Actions/Workflow system by interacting
-## with the environment.  The `GitHubActions` module makes this
-## easier and more natural by wrapping up access to the Workflow
-## environment in PowerShell-friendly constructions and idioms
-if (-not (Get-Module -ListAvailable GitHubActions)) {
-    ## Make sure the GH Actions module is installed from the Gallery
-    Install-Module GitHubActions -Force
-}
-
-## Load up some common functionality for interacting
-## with the GitHub Actions/Workflow environment
-Import-Module GitHubActions
-
-
-$inputs = @{
-    users_list        = Get-ActionInput users_list
-    readme_path       = Get-ActionInput readme_path
-    commit_message    = Get-ActionInput commit_message
-    commiter_username = Get-ActionInput commiter_username
-    commiter_email    = Get-ActionInput commiter_email
-}
+# $inputs = @{
+#     users_list        = Get-ActionInput users_list
+#     readme_path       = Get-ActionInput readme_path
+#     commit_message    = Get-ActionInput commit_message
+#     commiter_username = Get-ActionInput commiter_username
+#     commiter_email    = Get-ActionInput commiter_email
+# }
 
 #Region Get-CurrentTop8Section
 

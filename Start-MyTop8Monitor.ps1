@@ -1,15 +1,15 @@
 [CmdletBinding()]
 Param(
-    # # Specifies a path to one or more locations.
-    # [Parameter(Mandatory=$true,
-    #            Position=0,
-    #            ParameterSetName="Path",
-    #            ValueFromPipeline=$true,
-    #            ValueFromPipelineByPropertyName=$true,
-    #            HelpMessage="Path to one or more locations.")]
-    # [ValidateNotNullOrEmpty()]
-    # [System.String]
-    # $Path,
+    # Specifies a path to one or more locations.
+    [Parameter(Mandatory=$true,
+               Position=0,
+               ParameterSetName="Path",
+               ValueFromPipeline=$true,
+               ValueFromPipelineByPropertyName=$true,
+               HelpMessage="Path to one or more locations.")]
+    [ValidateNotNullOrEmpty()]
+    [System.String]
+    $Path = $env:INPUT_README_PATH
 
     # # Specifies a path to one or more locations.
     # [Parameter(Mandatory=$true,
@@ -70,11 +70,11 @@ Begin {
         Param()
 
         Process {
-            git config --local user.name "$env:INPUT_COMMITTER_USERNAME"
-            git config --local user.email "$env:INPUT_COMMITTER_EMAIL"
+            git config --local user.name "$env:COMMITTER_USERNAME"
+            git config --local user.email "$env:COMMITTER_EMAIL"
 
             git add .
-            git commit -m "$env:INPUT_COMMIT_MESSAGE"
+            git commit -m "$env:COMMIT_MESSAGE"
             git push
         }
     }
@@ -83,7 +83,7 @@ Begin {
 
 Process {
 
-    $ProfileContent = Get-Content -Path $env:README_PATH
+    $ProfileContent = Get-Content -Path $Path
 
     #Using BLOG start as a test
     $StartPattern = '<!-- MYTOP8-LIST:START -->'
@@ -103,7 +103,7 @@ Process {
     }
 
     $getCurrentTop8SectionSplat = @{
-        Users = $env:INPUT_USERS_LIST
+        Users = $env:USERS_LIST
     }
 
     $GeneratedTop8Section = Get-CurrentTop8Section @getCurrentTop8SectionSplat

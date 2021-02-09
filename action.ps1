@@ -1,20 +1,13 @@
 Param(
-    [Parameter(Mandatory)]
-    [System.Object[]] $ReadMePath,
+    [System.Object] $ReadMePath,
 
-    [Parameter(Mandatory)]
-    [System.Object[]] $UsersList,
+    [System.Object] $UsersList,
 
-    [Parameter(Mandatory)]
-    [System.Object[]] $CommitMessage,
+    [System.Object] $CommitMessage,
 
-    [Parameter(Mandatory)]
-    [System.Object[]] $CommitterUsername,
+    [System.Object] $CommitterUsername,
 
-    [Parameter(Mandatory)]
-    [System.Object[]] $CommitterEmail,
-
-    [System.Object[]]$Extra
+    [System.Object] $CommitterEmail
 )
 
 #Region Get-CurrentTop8Section

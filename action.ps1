@@ -78,6 +78,13 @@ Begin {
 }
 
 Process {
+
+    $ReadMePath = './matthewjdegarmo/readme.md'
+    $UsersList = @('brrees01', 'intenseone', 'EdwardHanlon', 'packersking', 'sannae', 'TylerLeonhardt', 'matthewjdegarmo', 'matthewjdegarmo')
+    $CommitMessage= 'Updated MyTop8 section with current list of users.'
+    $CommitterUsername = 'MyTop8-post-bot'
+    $CommitterEmail = 'MyTop8-post-bot@matthewjdegarmo.com'
+    
     $ProfileContent = Get-Content -Path $ReadMePath
     
     #Using BLOG start as a test
@@ -106,9 +113,23 @@ Process {
     }
     
     $GeneratedTop8Section = Get-CurrentTop8Section @getCurrentTop8SectionSplat
-    
-    Compare-Object -ReferenceObject $CurrentSection -DifferenceObject $GeneratedTop8Section -PassThru
-    # $AssembledProfile = $PreSectionContent,,$PostSectionContent | Out-String
+
+    $CurrentSectionString = $CurrentSection | Out-String
+
+    $IsDifferent = for ($i = 0; $i -lt $CurrentSectionString.Length; $i++) {
+        If (Compare-Object -ReferenceObject $CurrentSectionString[$i].ToString() -DifferenceObject $GeneratedTop8Section[$i].ToString() -PassThru -ErrorAction SilentlyContinue) {
+            $true
+            break
+        }
+    }
+
+    If ($IsDifferent) {
+        #Overwrite readme file and ##TODO: commit / push to repo.
+        Write-Host "Overwriting profile readme."
+        $AssembledProfile = $PreSectionContent,$GeneratedTop8Section,$PostSectionContent | Out-String
+        $AssembledProfile | Out-File $ReadMePath -Force
+    }
+
     # $ProfileContentString = $ProfileContent | Out-String
     
     

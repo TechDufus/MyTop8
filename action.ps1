@@ -8,7 +8,9 @@ Param(
 
     [System.Object] $CommitterUsername,
 
-    [System.Object] $CommitterEmail
+    [System.Object] $CommitterEmail,
+
+    [System.Object[]] $Extra
 )
 
 Begin {

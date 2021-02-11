@@ -25,6 +25,12 @@ inputs:
     required: false
 
 
+# ## Even though the Action logic may be implemented
+# ## in PWSH, we still need a NodeJS entry point
+# runs:
+#   using: node12
+#   main: _init/index.js
+
 runs:
   using: composite
   steps:

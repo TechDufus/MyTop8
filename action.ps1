@@ -77,14 +77,7 @@ Begin {
     #EndRegion Commit-GitRepo
 }
 
-Process {
-
-    $ReadMePath = './matthewjdegarmo/readme.md'
-    $UsersList = @('brrees01', 'intenseone', 'EdwardHanlon', 'packersking', 'sannae', 'TylerLeonhardt', 'matthewjdegarmo', 'matthewjdegarmo')
-    $CommitMessage= 'Updated MyTop8 section with current list of users.'
-    $CommitterUsername = 'MyTop8-post-bot'
-    $CommitterEmail = 'MyTop8-post-bot@matthewjdegarmo.com'
-    
+Process {    
     $ProfileContent = Get-Content -Path $ReadMePath
     
     #Using BLOG start as a test

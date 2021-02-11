@@ -120,6 +120,13 @@ Process {
         Write-Host "Overwriting profile readme."
         $AssembledProfile = $PreSectionContent,$GeneratedTop8Section,$PostSectionContent | Out-String
         $AssembledProfile | Out-File $ReadMePath -Force
+
+        $commitGitRepoSplat = @{
+            CommitMessage     = $CommitMessage
+            CommitterUsername = $CommitterUsername
+            CommitterEmail    = $CommitterEmail
+        }
+        Commit-GitRepo @commitGitRepoSplat
     }
 
     # $ProfileContentString = $ProfileContent | Out-String

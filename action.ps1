@@ -1,4 +1,3 @@
-[CmdletBinding()]
 Param(
     [System.Object] $ReadMePath,
 

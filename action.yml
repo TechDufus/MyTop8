@@ -1,7 +1,7 @@
 name: 'MyTop8 Workflow'
 author: 'Matthew J. DeGarmo'
 description: 'Create a ''MySpace Top 8'' section in your ReadMe.md file for GitHub users.'
-icon: activity
+
 
 inputs:
   users_list:
@@ -25,12 +25,6 @@ inputs:
     default: "MyTop8-post-bot@matthewjdegarmo.com"
     required: false
 
-
-# ## Even though the Action logic may be implemented
-# ## in PWSH, we still need a NodeJS entry point
-# runs:
-#   using: node12
-#   main: _init/index.js
 
 runs:
   using: composite

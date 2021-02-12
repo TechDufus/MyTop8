@@ -90,7 +90,6 @@ Process {
     
     $PreSectionContent = $ProfileContent[0..($StartIndex - 1)]
     $CurrentSection = $ProfileContent[$StartIndex..$EndIndex]
-    
     $EndOfFileIndex = ($ProfileContent.Count - 1)
     
     #If section is the end of the file, we need to blank out the Post section.
@@ -99,15 +98,11 @@ Process {
     } Else {
         $PostSectionContent = $ProfileContent[($EndIndex + 1)..$EndOfFileIndex]
     }
-    
     $getCurrentTop8SectionSplat = @{
         Users = $UsersList
     }
-    
     $GeneratedTop8Section = Get-CurrentTop8Section @getCurrentTop8SectionSplat
-
     $CurrentSectionString = $CurrentSection | Out-String
-
     $IsDifferent = for ($i = 0; $i -lt $CurrentSectionString.Length; $i++) {
         If (Compare-Object -ReferenceObject $CurrentSectionString[$i].ToString() -DifferenceObject $GeneratedTop8Section[$i].ToString() -PassThru -ErrorAction SilentlyContinue) {
             $true
@@ -128,18 +123,4 @@ Process {
         }
         Commit-GitRepo @commitGitRepoSplat
     }
-
-    # $ProfileContentString = $ProfileContent | Out-String
-    
-    
-    
-    # If ($AssembledProfile -eq $ProfileContentString) {
-    #     "They are the same, no changes need to be made"
-    # } Else {
-    #     "Need to publish new profile for New Top8 Content."
-    #     "git commit -m 'New MyTop8 Content'"
-    #     "git push"
-    # }
-
 }    
-

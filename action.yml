@@ -1,6 +1,7 @@
 name: 'MyTop8 Workflow'
 author: 'Matthew J. DeGarmo'
 description: 'Create a ''MySpace Top 8'' section in your ReadMe.md file for GitHub users.'
+icon: activity
 
 inputs:
   users_list:

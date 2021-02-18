@@ -37,7 +37,11 @@ Begin {
             $null=$OutputMyTop8.AppendLine('<!-- MYTOP8-LIST:START -->')
             $null=$OutputMyTop8.AppendLine('<table style="border-collapse: collapse;" border="1"><tbody>')
             for ($i = 0; $i -lt $Users.Count; $i++) {
-                $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
+                If ($Users[$i] -eq '--MyspaceTom--') {
+                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://twitter.com/myspacetom'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://pbs.twimg.com/profile_images/1237550450/mstom_400x400.jpg' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://twitter.com/myspacetom'>Tom</a></p></td>")
+                } Else {
+                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
+                }
                 If ($i -eq 3) {
                     $null=$OutputMyTop8.Append('</tr><tr>')
                 }
@@ -79,10 +83,10 @@ Begin {
 Process {    
     $ProfileContent = Get-Content -Path $ReadMePath
     
-    #Using BLOG start as a test
+
     $StartPattern = '<!-- MYTOP8-LIST:START -->'
     $StartIndex = (($ProfileContent | Select-String -Pattern $StartPattern).LineNumber - 1)
-    #Using BLOG end as a test
+
     $EndPattern = '<!-- MYTOP8-LIST:END -->'
     $EndIndex = (($ProfileContent | Select-String -Pattern $EndPattern).LineNumber - 1)
     
@@ -111,7 +115,7 @@ Process {
     }
 
     If ($IsDifferent) {
-        #Overwrite readme file and ##TODO: commit / push to repo.
+        #Overwrite readme file and commit / push to repo.
         Write-Host "Overwriting profile readme."
         $AssembledProfile = $PreSectionContent,$GeneratedTop8Section,$PostSectionContent | Out-String
         $AssembledProfile | Out-File $ReadMePath -Force

@@ -9,10 +9,38 @@ Param(
 
     [System.Object] $CommitterUsername,
 
-    [System.Object] $CommitterEmail
+    [System.Object] $CommitterEmail,
+
+    [ValidateScript({
+        If (($_ -gt 150) -OR ($_ -le 0)) {
+            $false
+        } Else {
+            $true
+        }
+    })]
+    [Int] $TableSizePercent
 )
 
 Begin {
+
+    #Region Get-PixelLength
+
+    Function Get-PixelLength() {
+        [CmdletBinding()]
+        Param(
+            [Int] $TableSizePercent
+        )
+
+        Begin {
+            [Int] $DefaultPixelLength = 145
+        }
+
+        Process {
+            [System.Math]::Round(($TableSizePercent / 100) * $DefaultPixelLength)
+        }
+    }
+    #EndRegion Get-PixelLength
+
     #Region Get-CurrentTop8Section
     
     Function Get-CurrentTop8Section() {
@@ -27,7 +55,9 @@ Begin {
                         HelpMessage="Path to one or more locations.")]
             [ValidateNotNullOrEmpty()]
             [System.String[]]
-            $Users
+            $Users,
+
+            $PixelLength
         )
     
         Process {
@@ -40,9 +70,9 @@ Begin {
             $null=$OutputMyTop8.AppendLine('<table style="border-collapse: collapse;" border="1"><tbody>')
             for ($i = 0; $i -lt $Users.Count; $i++) {
                 If ($Users[$i] -eq '--MyspaceTom--') {
-                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://twitter.com/myspacetom'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://pbs.twimg.com/profile_images/1237550450/mstom_400x400.jpg' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://twitter.com/myspacetom'>Tom</a></p></td>")
+                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://twitter.com/myspacetom'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://pbs.twimg.com/profile_images/1237550450/mstom_400x400.jpg' alt='' width='$PixelLength' height='$PixelLength' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://twitter.com/myspacetom'>Tom</a></p></td>")
                 } Else {
-                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='145' height='145' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
+                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='$PixelLength' height='$PixelLength' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
                 }
                 If ($i -eq 3) {
                     $null=$OutputMyTop8.Append('</tr><tr>')
@@ -107,6 +137,7 @@ Process {
     }
     $getCurrentTop8SectionSplat = @{
         Users = $UsersList
+        PixelLength = Get-PixelLength -TableSizePercent $TableSizePercent
     }
     $GeneratedTop8Section = Get-CurrentTop8Section @getCurrentTop8SectionSplat
     $CurrentSectionString = $CurrentSection | Out-String

@@ -70,9 +70,9 @@ Begin {
             $null=$OutputMyTop8.AppendLine('<table style="border-collapse: collapse;" border="1"><tbody>')
             for ($i = 0; $i -lt $Users.Count; $i++) {
                 If ($Users[$i] -eq '--MyspaceTom--') {
-                    $null=$OutputMyTop8.AppendLine("<td style=''><p><a href='https://twitter.com/myspacetom'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://pbs.twimg.com/profile_images/1237550450/mstom_400x400.jpg' alt='' width='$PixelLength' height='$PixelLength' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://twitter.com/myspacetom'>Tom</a></p></td>")
+                    $null=$OutputMyTop8.AppendLine("<td style='text-align:center'><p><a href='https://twitter.com/myspacetom'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://pbs.twimg.com/profile_images/1237550450/mstom_400x400.jpg' alt='' width='$PixelLength' height='$PixelLength' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://twitter.com/myspacetom'>Tom</a></p></td>")
                 } Else {
-                    $null=$OutputMyTop8.AppendLine("<td style=''><center><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='$PixelLength' height='$PixelLength' /></a></p></center><center><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></center></td>")
+                    $null=$OutputMyTop8.AppendLine("<td style='text-align:center'><p><a href='https://github.com/$($Users[$i])'><img style='display: block; margin-left: auto; margin-right: auto;' src='https://github.com/$($Users[$i]).png' alt='' width='$PixelLength' height='$PixelLength' /></a></p><p style='text-align: center;'>$($i + 1). <a href='https://github.com/$($Users[$i])'>$($Users[$i])</a></p></td>")
                 }
                 If ($i -eq 3) {
                     $null=$OutputMyTop8.Append('</tr><tr>')

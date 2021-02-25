@@ -24,6 +24,10 @@ inputs:
     description: "Email id used while committing to the repo"
     default: "MyTop8-post-bot@matthewjdegarmo.com"
     required: false
+  table_size_percent:
+    description: "Default 100% is 145px. Provide a percentage to change this default."
+    default: '100'
+    required: false
 
 
 runs:
@@ -36,4 +40,5 @@ runs:
         -CommitMessage     ${{ inputs.commit_message }}
         -CommitterUsername ${{ inputs.committer_username }}
         -CommitterEmail    ${{ inputs.committer_email }}
+        -TableSizePercent  ${{ inputs.table_size_percent }}
       shell: pwsh
